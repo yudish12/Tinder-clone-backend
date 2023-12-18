@@ -21,7 +21,7 @@ export const authMiddleware = catchAsync(async(req,res,next)=>{
     
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-      const user = await User.findById(decoded.obj._id).select('-password');
+      const user = await User.findById(decoded.userid).select('-password');
       if (!user) {
         return next(
           new AppError('User belonging to this token does no longer exist', 401)

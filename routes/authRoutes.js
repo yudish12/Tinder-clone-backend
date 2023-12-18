@@ -1,9 +1,10 @@
 import express from "express";
-import { loginController, signUpController } from "../controllers/authControllers.js";
+import { getUserDetails, loginController, signUpController } from "../controllers/authControllers.js";
 import { body, param } from "express-validator";
 import { catchAsync } from "../utils/catchAsync.js";
 import jwt from 'jsonwebtoken'
 import { User } from "../models/usermodel.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -43,6 +44,11 @@ router.post(
     ],
     loginController
   );
+
+
+  router.get("/getuser",authMiddleware,
+    getUserDetails
+  )
   
 
 

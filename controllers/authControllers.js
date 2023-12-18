@@ -60,3 +60,20 @@ export const loginController = catchAsync(async(req,res,next)=>{
     }
 
 })
+
+
+export const getUserDetails = catchAsync(async(req,res,next)=>{
+    const {id} = req.user
+    const user = await User.findById(id).select("-password")
+
+    if(!user){
+        next(new AppError("User Not Found",403))
+    }
+
+    return res.status(200).json({
+        message:"success",
+        data:user
+    })
+
+
+})

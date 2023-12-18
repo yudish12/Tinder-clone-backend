@@ -7,6 +7,7 @@ import { errHandler } from './middlewares/errorMiddleware.js';
 import { AppError } from './utils/AppError.js';
 import authRoutes from './routes/authRoutes.js';
 import matchRoutes from './routes/matchRoutes.js';
+import filterRoutes from './routes/filterRoutes.js'
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.get("/",(req,res)=>{
 
 app.use("/api/auth",authRoutes);
 app.use("/api/match",matchRoutes);
+app.use("/api/filter",filterRoutes);
 
 app.all('*', (req, res, next) => {
     //AppError class for error handler object

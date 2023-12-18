@@ -58,6 +58,10 @@ const user_schema = new mongoose.Schema({
         },       
         address:String,
     },
+    filters:{
+        type:String,
+        default:null
+    }
 },{timestamps:true,strict:true})
 
 user_schema.index({location:'2dsphere'})
