@@ -77,3 +77,15 @@ export const getUserDetails = catchAsync(async(req,res,next)=>{
 
 
 })
+
+
+export const updateUserController = catchAsync(async(req,res,next)=>{
+    const {id} = req.user
+    // req.body.age = Number(req.body.age)
+    console.log(req.body)
+    const newDetails = await User.findByIdAndUpdate(id,{...req.body.payload,age:Number(req.body.payload.age)},{new:true});
+    return res.status(200).json({
+        message:"success",
+        data:newDetails
+    })
+})

@@ -8,6 +8,7 @@ import { AppError } from './utils/AppError.js';
 import authRoutes from './routes/authRoutes.js';
 import matchRoutes from './routes/matchRoutes.js';
 import filterRoutes from './routes/filterRoutes.js'
+import matchReqRoutes from './routes/matchReqRoutes.js';
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.get("/",(req,res)=>{
 app.use("/api/auth",authRoutes);
 app.use("/api/match",matchRoutes);
 app.use("/api/filter",filterRoutes);
+app.use("/api/match/req",matchReqRoutes);
 
 app.all('*', (req, res, next) => {
     //AppError class for error handler object

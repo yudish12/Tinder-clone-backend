@@ -1,5 +1,5 @@
 import express from "express";
-import { getUserDetails, loginController, signUpController } from "../controllers/authControllers.js";
+import { getUserDetails, loginController, signUpController,updateUserController } from "../controllers/authControllers.js";
 import { body, param } from "express-validator";
 import { catchAsync } from "../utils/catchAsync.js";
 import jwt from 'jsonwebtoken'
@@ -46,9 +46,9 @@ router.post(
   );
 
 
-  router.get("/getuser",authMiddleware,
+  router.route('/').get(authMiddleware,
     getUserDetails
-  )
+  ).patch(authMiddleware,updateUserController)
   
 
 

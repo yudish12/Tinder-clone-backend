@@ -1,22 +1,7 @@
 import { catchAsync } from "../utils/catchAsync.js";
-import jwt from 'jsonwebtoken';
-import {validationResult } from "express-validator"
-import { AppError } from "../utils/AppError.js";
+
 import { User } from "../models/usermodel.js";
 
-export const sendMatchRequest = catchAsync(async(req,res,next)=>{
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
-        return res.status(400).json(result)
-    }
-
-    const reciever = req.body.recieverId
-    const sender = req.user._id
-    if(reciever===sender){
-        next(new AppError("You can't send match request to yourself",400));
-    }
-    console.log(reciever,sender)
-})
 
 export const getMatches = catchAsync(async(req,res,next)=>{
     const filters = JSON.parse(req.user.filters);
@@ -26,7 +11,18 @@ export const getMatches = catchAsync(async(req,res,next)=>{
     const age = filters.ageFilter
     const distanceFilter = filters.distanceFilter
 
-    const aggregatePipeline = [];
+    const aggregatePipeline = [{
+        $lookup: {
+          from: "matchrequests",
+          localField: "_id",
+          foreignField: "reciever",
+          as: "results"
+        }
+      },{
+        $match: {
+          "results.0":{$exists:false}
+        }
+      }];
 
     if(isDistanceMust){
         const userLocation = [req.user.location.coordinates[0], req.user.location.coordinates[1]]; // User's location coordinates
@@ -44,6 +40,7 @@ export const getMatches = catchAsync(async(req,res,next)=>{
             }
         });
     }else{
+        const userLocation = [req.user.location.coordinates[0], req.user.location.coordinates[1]];
         aggregatePipeline.push({
             $match: {
                 location: {
