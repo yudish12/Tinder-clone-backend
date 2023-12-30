@@ -1,20 +1,52 @@
+import { messages } from "../models/messages.js";
 import { catchAsync } from "../utils/catchAsync.js";
 
-export const sendMessage = catchAsync((req,res,next)=>{
+export const sendMessage = catchAsync(async (req, res, next) => {
     const result = validationResult(req);
-    
+
     if (!result.isEmpty()) {
         return res.status(400).json(result)
     }
 
     const reciever = req.body.recieverId
+    const { matchId, message } = req.body
+    const sender = req.user._id
+
+    const data = await messages.create({ message, matchId, reciever, sender });
+
+    return res.status(200).json({
+        message:"message sent succesfully",
+        data:data
+    })
 })
-export const getMessages = catchAsync((req,res,next)=>{
+export const getMessages = catchAsync(async(req, res, next) => {
+    const {matchId} = req.query;
+    const data = await messages.find({matchId})
+    return res.status(200).json({
+        message:"messages fetched successfully",
+        data:data
+    });
+})
+
+
+export const editMessage = catchAsync(async(req, res, next) => {
+    const {message} = req.body;
+    const {matchId} = req.query;
+
+    const newMessage = await messages.findByIdAndUpdate(matchId,{message:message},{new:true});
+
+    return res.status(200).json({
+        messaage:"message updated succesfully",
+        data:newMessage
+    })
 
 })
-export const editMessage = catchAsync((req,res,next)=>{
 
-})
-export const deleteMessage = catchAsync((req,res,next)=>{
 
+export const deleteMessage = catchAsync(async(req, res, next) => {
+    const {messageId} = req.query;
+    await messages.findByIdAndDelete(messageId);
+    return res.status(200).json({
+        message:"message deleted sucessfully",
+    })
 })
