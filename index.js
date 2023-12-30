@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors'
 import morgan from 'morgan';
+import http from 'http';
 import 'dotenv/config'
 import mongoose from 'mongoose';
 import { errHandler } from './middlewares/errorMiddleware.js';
@@ -9,8 +10,27 @@ import authRoutes from './routes/authRoutes.js';
 import matchRoutes from './routes/matchRoutes.js';
 import filterRoutes from './routes/filterRoutes.js'
 import matchReqRoutes from './routes/matchReqRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
+import { Server } from 'socket.io';
 
 const app = express();
+
+const server = http.createServer(app);
+
+export const io = new Server(server,{
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"]
+  }
+})
+
+
+io.on("connection", (socket) => {
+  socket.on("disconnect",()=>console.log("someone disconnected"))
+  console.log("connection started")
+});
+
+
 
 app.use(express.json())
 
@@ -41,6 +61,7 @@ app.get("/",(req,res)=>{
 app.use("/api/auth",authRoutes);
 app.use("/api/match",matchRoutes);
 app.use("/api/filter",filterRoutes);
+app.use('/api/messages',messageRoutes)
 app.use("/api/match/req",matchReqRoutes);
 
 app.all('*', (req, res, next) => {
@@ -50,7 +71,7 @@ app.all('*', (req, res, next) => {
 
 app.use(errHandler)
 
-app.listen(5000,()=>{
+server.listen(5000,()=>{
     console.log("Server Started")
 })
 

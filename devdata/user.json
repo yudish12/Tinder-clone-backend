@@ -1,0 +1,140 @@
+[
+    {
+        "_id": {
+            "$oid": "6589751bd3b541979b011719"
+        },
+        "name": "janedoe",
+        "email": "jane@gmail.com",
+        "password": "$2a$12$ctHyb.vixuJkplXCE6MLHeNjDfpjJdrVszquf7X5elfeXOLDd.l/O",
+        "height": "174",
+        "weight": 72,
+        "age": 21,
+        "gender": "female",
+        "preference": "male",
+        "date_type": "long term",
+        "photos": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [77.01103941067532, 28.50795993426229],
+            "address": "Gurgaon,sector-109"
+        },
+        "createdAt": "2023-12-10T15:02:45.488+00:00",
+        "updatedAt": "2023-12-10T15:02:45.488+00:00",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "6589755cd3b541979b01171a"
+        },
+        "name": "arvind",
+        "email": "arvind@gmail.com",
+        "password": "$2a$12$ctHyb.vixuJkplXCE6MLHeNjDfpjJdrVszquf7X5elfeXOLDd.l/O",
+        "height": "178",
+        "weight": 77,
+        "age": 23,
+        "gender": "male",
+        "preference": "female",
+        "date_type": "short term",
+        "photos": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [77.13492367831566, 28.58852871473036],
+            "address": "Delhi cant"
+        },
+        "createdAt": "2023-12-10T15:02:45.488+00:00",
+        "updatedAt": "2023-12-10T15:02:45.488+00:00",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "6589755cd3b541979b01171d"
+        },
+        "name": "mohd mushir",
+        "email": "mushir@gmail.com",
+        "password": "$2a$12$ctHyb.vixuJkplXCE6MLHeNjDfpjJdrVszquf7X5elfeXOLDd.l/O",
+        "height": "178",
+        "weight": 77,
+        "age": 23,
+        "gender": "male",
+        "preference": "female",
+        "date_type": "casual",
+        "photos": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [66.99371731595306, 24.84481724144051],
+            "address": "Karachi"
+        },
+        "createdAt": "2023-12-10T15:02:45.488+00:00",
+        "updatedAt": "2023-12-10T15:02:45.488+00:00",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "6589755cd3b541979b011716"
+        },
+        "name": "rehman ali",
+        "email": "rehman@gmail.com",
+        "password": "$2a$12$ctHyb.vixuJkplXCE6MLHeNjDfpjJdrVszquf7X5elfeXOLDd.l/O",
+        "height": "183",
+        "weight": 73,
+        "age": 18,
+        "gender": "male",
+        "preference": "male",
+        "date_type": "long term",
+        "photos": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [66.99371731595306, 24.84481724144051],
+            "address": "Karachi"
+        },
+        "createdAt": "2023-12-10T15:02:45.488+00:00",
+        "updatedAt": "2023-12-10T15:02:45.488+00:00",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "6589755cd3b541979b01171h"
+        },
+        "name": "prerna",
+        "email": "prerna@gmail.com",
+        "password": "$2a$12$ctHyb.vixuJkplXCE6MLHeNjDfpjJdrVszquf7X5elfeXOLDd.l/O",
+        "height": "167",
+        "weight": 60,
+        "age": 20,
+        "gender": "female",
+        "preference": "male",
+        "date_type": "casual",
+        "photos": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [77.48013911046968, 28.452626678610102],
+            "address": "Karachi"
+        },
+        "createdAt": "2023-12-10T15:02:45.488+00:00",
+        "updatedAt": "2023-12-10T15:02:45.488+00:00",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "6589755cd3b541979b011218"
+        },
+        "name": "stuti",
+        "email": "stuti@gmail.com",
+        "password": "$2a$12$ctHyb.vixuJkplXCE6MLHeNjDfpjJdrVszquf7X5elfeXOLDd.l/O",
+        "height": "164",
+        "weight": 53,
+        "age": 22,
+        "gender": "female",
+        "preference": "male",
+        "date_type": "long term",
+        "photos": [],
+        "location": {
+            "type": "Point",
+            "coordinates": [77.21635682893555, 28.52147190036355],
+            "address": "greater"
+        },
+        "createdAt": "2023-12-10T15:02:45.488+00:00",
+        "updatedAt": "2023-12-10T15:02:45.488+00:00",
+        "__v": 0
+    }
+]

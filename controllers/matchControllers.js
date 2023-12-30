@@ -1,15 +1,17 @@
 import { catchAsync } from "../utils/catchAsync.js";
 
 import { User } from "../models/usermodel.js";
+import { match } from "../models/matchmodel.js";
 
 
 export const getMatches = catchAsync(async(req,res,next)=>{
     const filters = JSON.parse(req.user.filters);
 
-    const isAgeMust = filters.ageMust;
-    const isDistanceMust = filters.distanceMust;
-    const age = filters.ageFilter
-    const distanceFilter = filters.distanceFilter
+    
+    const isAgeMust = filters?.ageMust;
+    const isDistanceMust = filters?.distanceMust;
+    const age = filters?.ageFilter
+    let distanceFilter = filters?.distanceFilter
 
     const aggregatePipeline = [{
         $lookup: {
@@ -20,11 +22,11 @@ export const getMatches = catchAsync(async(req,res,next)=>{
         }
       },{
         $match: {
-          "results.0":{$exists:false}
+          "results.sender":{$ne:req._id}
         }
       }];
 
-    if(isDistanceMust){
+    if(isDistanceMust && filters){
         const userLocation = [req.user.location.coordinates[0], req.user.location.coordinates[1]]; // User's location coordinates
 
         aggregatePipeline.push({
@@ -40,6 +42,7 @@ export const getMatches = catchAsync(async(req,res,next)=>{
             }
         });
     }else{
+        if(!distanceFilter)distanceFilter = 40
         const userLocation = [req.user.location.coordinates[0], req.user.location.coordinates[1]];
         aggregatePipeline.push({
             $match: {
@@ -56,6 +59,7 @@ export const getMatches = catchAsync(async(req,res,next)=>{
     }
 
     if(isAgeMust){
+        
         aggregatePipeline.push({ $match: { age: age } });
     }else{
         aggregatePipeline.push({ $sort: { age: 1 } });
@@ -77,5 +81,28 @@ export const getMatches = catchAsync(async(req,res,next)=>{
     return res.status(200).json({
         message:"success",
         data:result
+    })
+})
+
+
+export const getMatched = catchAsync(async(req,res,next)=>{
+    const userid = req.user._id;
+
+    const data = await match.find({users:userid}).populate('users')
+
+    return res.status(200).json({
+        message:"matched users fetched succesfully",
+        data:data
+    })
+
+})
+
+
+export const unmatch = catchAsync(async(req,res,next)=>{
+    const matchId = req.params;
+    const data = await match.findByIdAndUpdate(matchId,{status:"unmatched"},{new:true});
+    return res.status(200).json({
+        message:"unmatched successfully",
+        data:data
     })
 })

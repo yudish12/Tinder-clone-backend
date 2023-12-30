@@ -3,6 +3,14 @@ import {User} from '../models/usermodel.js';
 import {validationResult } from "express-validator"
 import { AppError } from "../utils/AppError.js";
 import jwt from 'jsonwebtoken';
+import { v2 as cloudinary } from 'cloudinary'
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export const signUpController = catchAsync(async(req,res,next)=>{
     const result = validationResult(req);
@@ -88,4 +96,24 @@ export const updateUserController = catchAsync(async(req,res,next)=>{
         message:"success",
         data:newDetails
     })
+})
+
+export const uploadPhotos = catchAsync(async(req,res,next)=>{
+    if(!req.files || req.files.length<2){
+        next(new AppError('Please Upload all photos',400))
+    }
+	const {id} = req.user
+	const imageData1 = req.files[0].buffer.toString("base64");
+	const imageData2 = req.files[1].buffer.toString("base64");
+
+	const [img1,img2] = await Promise.all([
+		cloudinary.uploader.upload("data:image/jpeg;base64,"+imageData1),
+		cloudinary.uploader.upload("data:image/jpeg;base64,"+imageData2)
+	])
+
+	const data = await User.findByIdAndUpdate(id,{photos:[img1.url,img2.url]},{new:true})
+	return res.status(200).json({
+		message:"success",
+		data:data
+	})
 })
