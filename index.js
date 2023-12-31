@@ -12,6 +12,7 @@ import filterRoutes from './routes/filterRoutes.js'
 import matchReqRoutes from './routes/matchReqRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
 import { Server } from 'socket.io';
+import { messageService } from './services/messageService.js';
 
 const app = express();
 
@@ -26,8 +27,20 @@ export const io = new Server(server,{
 
 
 io.on("connection", (socket) => {
+  console.log("someone connected")
+
   socket.on("disconnect",()=>console.log("someone disconnected"))
-  console.log("connection started")
+  
+  socket.use((socket,next)=>{
+    console.log(socket,33);
+    next();
+  })
+  
+  const service = new messageService(socket);
+
+  service.listen('joinroom')
+  service.listen('messagesent')
+  
 });
 
 

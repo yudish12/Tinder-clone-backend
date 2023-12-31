@@ -12,7 +12,7 @@ export const getMatches = catchAsync(async(req,res,next)=>{
     const isDistanceMust = filters?.distanceMust;
     const age = filters?.ageFilter
     let distanceFilter = filters?.distanceFilter
-
+    console.log(req.user.preference);
     const aggregatePipeline = [{
         $lookup: {
           from: "matchrequests",
@@ -22,9 +22,11 @@ export const getMatches = catchAsync(async(req,res,next)=>{
         }
       },{
         $match: {
-          "results.sender":{$ne:req._id}
+          "results.sender":{$ne:req._id},
+          gender:req.user.preference
         }
-      }];
+      },
+    ];
 
     if(isDistanceMust && filters){
         const userLocation = [req.user.location.coordinates[0], req.user.location.coordinates[1]]; // User's location coordinates

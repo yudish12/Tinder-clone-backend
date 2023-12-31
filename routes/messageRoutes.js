@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(authMiddleware)
 
 router.route('/').
-    get(query('matchId').notEmpty, getMessages).
+    get(query('matchId'), getMessages).
     post([
         body('message').notEmpty(),
         body('recieverId').notEmpty(),
